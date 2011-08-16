@@ -8,12 +8,13 @@
 "
 " :Rename[!] {newname}
 
-command! -nargs=* -complete=file -bang Rename :call Rename("<args>", "<bang>")
+command! -nargs=* -complete=file -bang Rename call Rename(<q-args>, '<bang>')
 
 function! Rename(name, bang)
+	let l:name = a:name
 	let l:curfile = expand("%:p")
 	let v:errmsg = ""
-	silent! exe "saveas" . a:bang . " " . a:name
+	silent! exe "saveas" . a:bang . " " . l:name
 	if v:errmsg =~# '^$\|^E329'
 		if expand("%:p") !=# l:curfile && filewritable(expand("%:p"))
 			silent exe "bwipe! " . l:curfile
